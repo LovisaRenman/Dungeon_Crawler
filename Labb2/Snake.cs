@@ -3,7 +3,7 @@ class Snake : Entity
 {
     public Snake(int xCord, int yCord)
     {
-        CharacterChar = 'S';
+        CharacterChar = 's';
         CharacterColor = ConsoleColor.Green;
 
         CoordX = xCord;

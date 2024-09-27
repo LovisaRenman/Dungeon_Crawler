@@ -3,7 +3,7 @@ class Rat : Entity
 {
     public Rat(int xCord, int yCord)
     {
-        CharacterChar = 'R';
+        CharacterChar = 'r';
         CharacterColor = ConsoleColor.Red;
 
         CoordX = xCord;

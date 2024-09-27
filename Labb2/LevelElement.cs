@@ -7,10 +7,10 @@ abstract class LevelElement
     internal ConsoleColor CharacterColor { get; set; }
     internal int DistanceFromPlayer { get; set; }
 
-    virtual internal void Draw()
+    internal static void Draw(LevelElement element)
     {
-        Console.ForegroundColor = CharacterColor;
-        Console.SetCursorPosition(CoordX, CoordY);
-        Console.Write(CharacterChar);
+        Console.ForegroundColor = element.CharacterColor;
+        Console.SetCursorPosition(element.CoordX, element.CoordY);
+        Console.Write(element.CharacterChar);
     }
 }
