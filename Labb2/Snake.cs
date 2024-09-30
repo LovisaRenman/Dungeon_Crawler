@@ -1,5 +1,5 @@
 ﻿
-class Snake : Entity
+class Snake : Enemy
 {
     public Snake(int xCord, int yCord)
     {
@@ -9,10 +9,11 @@ class Snake : Entity
         CoordX = xCord;
         CoordY = yCord;
 
+        Name = "Snake";
         HealthPoints = 25;
     }
 
-    public override void Move()
+    public void Update(bool isOnAvailableSpot, LevelElement element)
     {
         throw new NotImplementedException();
     }

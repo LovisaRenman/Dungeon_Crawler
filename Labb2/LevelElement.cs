@@ -1,13 +1,13 @@
 ﻿
 abstract class LevelElement
 {
-    internal int CoordX { get; set; }
-    internal int CoordY { get; set; }
-    internal char CharacterChar { get; set; }
-    internal ConsoleColor CharacterColor { get; set; }
-    internal int DistanceFromPlayer { get; set; }
+    public int CoordX { get; set; }
+    public int CoordY { get; set; }
+    public char CharacterChar { get; set; }
+    public ConsoleColor CharacterColor { get; set; }
+    public int DistanceFromPlayer { get; set; }
 
-    internal static void Draw(LevelElement element)
+    public void Draw(LevelElement element)
     {
         Console.ForegroundColor = element.CharacterColor;
         Console.SetCursorPosition(element.CoordX, element.CoordY);

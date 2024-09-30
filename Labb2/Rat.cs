@@ -1,5 +1,5 @@
 ﻿
-class Rat : Entity
+class Rat : Enemy
 {
     public Rat(int xCord, int yCord)
     {
@@ -9,11 +9,24 @@ class Rat : Entity
         CoordX = xCord;
         CoordY = yCord;
 
+        Name = "Rat";
         HealthPoints = 10;
     }
 
-    public override void Move()
+    public void Update(bool isAvailableSpot, LevelElement element)
     {
-        throw new NotImplementedException();
+        Random rnd = new Random();
+        int direction = rnd.Next(0, 4);
+
+        Console.SetCursorPosition(CoordX, CoordY);
+        Console.WriteLine("\b");
+
+        if (!isAvailableSpot) { }
+        else if (direction == 0) CoordX--;
+        else if (direction == 1) CoordX++;
+        else if (direction == 2) CoordY--;
+        else if (direction == 3) CoordY++;
+
+        Draw(element);
     }
 }

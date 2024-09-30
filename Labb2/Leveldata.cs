@@ -1,12 +1,11 @@
 ﻿
 
-class Leveldata : LevelElement
+class LevelData : LevelElement
 {
-    List<LevelElement> elements = new List<LevelElement>();
-    public List<LevelElement> Elements
+    private List<LevelElement> elements = new List<LevelElement>();
+    public List<LevelElement> Elements 
     {
         get { return elements; }
-        set { elements = value; }
     }
     public void Load(string fileName)
     {
@@ -22,20 +21,20 @@ class Leveldata : LevelElement
                         if (lenghtOfLine == null) lenghtOfLine = "";
                         for (int j = 0; j < lenghtOfLine.Length; j++)
                         {
-                            var streamChar = reader.Read();
-                            if (streamChar == 35)
+                            var currentChar = reader.Read();
+                            if (currentChar == 35) // #
                             {
                                 elements.Add(new Wall(j, i));
                             }
-                            else if (streamChar == 114)
+                            else if (currentChar == 114) // r
                             {
                                 elements.Add(new Rat(j, i));
                             }
-                            else if (streamChar == 115)
+                            else if (currentChar == 115) // s
                             {
                                 elements.Add(new Snake(j, i));
                             }
-                            else if (streamChar == 64)
+                            else if (currentChar == 64) // @
                             {
                                 elements.Add(new Player(j, i));
                             }
