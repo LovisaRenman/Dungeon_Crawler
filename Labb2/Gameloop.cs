@@ -14,6 +14,7 @@ class Gameloop
         {
             if (player is Player)
             {
+                bool isPlayerAlive; // to later be implemented to stop the foreverloop if Player dies
                 while (true)
                 {
                     (player as Player).Update(player, levelData.Elements);
@@ -21,7 +22,11 @@ class Gameloop
                     {
                         if (enemy is Rat)
                         {
-                            (enemy as Rat).Update(enemy, levelData.Elements);
+                            (enemy as Rat).Update(enemy, levelData.Elements, player.CoordX, player.CoordY);
+                        }
+                        else if (enemy is Snake)
+                        {
+                            (enemy as Snake).Update(enemy, levelData.Elements, player.CoordX, player.CoordY);
                         }
                     }
                 }                               

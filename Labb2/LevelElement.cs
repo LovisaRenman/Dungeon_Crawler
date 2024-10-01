@@ -5,7 +5,14 @@ abstract class LevelElement
     public int CoordY { get; set; }
     public char CharacterChar { get; set; }
     public ConsoleColor CharacterColor { get; set; }
-    public int DistanceFromPlayer { get; set; }
+    public double DistanceFromPlayer(int playerXCoord, int playerYCoord, int elementXCoord, int elementYCoord)
+    {
+        double deltaX = (playerXCoord - elementXCoord);
+        double deltaY = (playerYCoord - elementYCoord);
+        double hypotenuse = deltaX * deltaX + deltaY * deltaY;
+        hypotenuse = Math.Sqrt(hypotenuse);
+        return hypotenuse;
+    }
 
     public void Draw(LevelElement element)
     {

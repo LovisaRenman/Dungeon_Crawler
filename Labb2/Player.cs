@@ -17,7 +17,7 @@ class Player : Entity
         HealthPoints = 25;
     }
 
-    public void Update(LevelElement element, List<LevelElement> list)
+    public override void Update(LevelElement element, List<LevelElement> list, int xCoord = 0, int yCoord = 0)
     {
         if (Console.ReadKey().Key == ConsoleKey.LeftArrow)
         {

@@ -7,6 +7,8 @@ abstract class Entity : LevelElement
     public Dice AttackDice { get; set; }
     public Dice DefenceDice { get; set; }
 
+    public abstract void Update(LevelElement element, List<LevelElement> listint, int playerXCoord = 0, int playerYCoord = 0);
+
     public void Delete()
     {
         Console.SetCursorPosition(CoordX, CoordY);
@@ -15,6 +17,7 @@ abstract class Entity : LevelElement
 
     public void MoveOneStep(string direction, List<LevelElement> list)
     {
+        bool hasMoved = true; // to be implemented to make the snake more slippery
         if (direction.ToLower() == "left")
         {
             CoordX--;
@@ -25,6 +28,7 @@ abstract class Entity : LevelElement
                     if (CoordX == wall.CoordX && CoordY == wall.CoordY)
                     {
                         CoordX++;
+                        hasMoved = false;
                         break;
                     }
                 }
@@ -40,6 +44,8 @@ abstract class Entity : LevelElement
                     if (CoordX == wall.CoordX && CoordY == wall.CoordY)
                     {
                         CoordX--;
+                        hasMoved = false;
+                        break;
                     }
                 }
             }
@@ -47,13 +53,15 @@ abstract class Entity : LevelElement
         if (direction.ToLower() == "down")
         {
             CoordY++;
-            foreach (LevelElement wall in list)
+            foreach (LevelElement element in list)
             {
-                if (wall is Wall)
+                if (element is Wall)
                 {
-                    if (CoordX == wall.CoordX && CoordY == wall.CoordY)
+                    if (CoordX == element.CoordX && CoordY == element.CoordY)
                     {
                         CoordY--;
+                        hasMoved = false;
+                        break;
                     }
                 }
             }
@@ -68,12 +76,13 @@ abstract class Entity : LevelElement
                     if (CoordX == wall.CoordX && CoordY == wall.CoordY)
                     {
                         CoordY++;
+                        hasMoved = false;
+                        break;
                     }
                 }
             }
         }
+        //return hasMoved;
     }
-
-
 }
 
