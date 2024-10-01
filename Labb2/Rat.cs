@@ -13,19 +13,19 @@ class Rat : Enemy
         HealthPoints = 10;
     }
 
-    public void Update(bool isAvailableSpot, LevelElement element)
+    public void Update(LevelElement element, List<LevelElement> list)
     {
         Random rnd = new Random();
         int direction = rnd.Next(0, 4);
 
         Console.SetCursorPosition(CoordX, CoordY);
-        Console.WriteLine("\b");
+        Console.WriteLine(" ");
 
-        if (!isAvailableSpot) { }
-        else if (direction == 0) CoordX--;
-        else if (direction == 1) CoordX++;
-        else if (direction == 2) CoordY--;
-        else if (direction == 3) CoordY++;
+        Delete();
+        if (direction == 0) MoveOneStep("left", list);
+        else if (direction == 1) MoveOneStep("right", list);            
+        else if (direction == 2) MoveOneStep("down", list);
+        else if (direction == 3) MoveOneStep("up", list);
 
         Draw(element);
     }

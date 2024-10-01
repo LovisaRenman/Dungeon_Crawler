@@ -17,6 +17,13 @@ class Gameloop
                 while (true)
                 {
                     (player as Player).Update(player, levelData.Elements);
+                    foreach (LevelElement enemy in levelData.Elements)
+                    {
+                        if (enemy is Rat)
+                        {
+                            (enemy as Rat).Update(enemy, levelData.Elements);
+                        }
+                    }
                 }                               
             }
         }

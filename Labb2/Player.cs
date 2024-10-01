@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 
@@ -18,76 +19,28 @@ class Player : Entity
 
     public void Update(LevelElement element, List<LevelElement> list)
     {
-        
         if (Console.ReadKey().Key == ConsoleKey.LeftArrow)
         {
             Delete();
-            CoordX--;
-            foreach (LevelElement wall in list)
-            {
-                if (wall is Wall)
-                {
-                    if (CoordX == wall.CoordX && CoordY == wall.CoordY)
-                    {
-                        CoordX++;
-                        break;
-                    }
-                }
-            }
+            MoveOneStep("left", list);
         }
         else if (Console.ReadKey().Key == ConsoleKey.RightArrow)
         {
             Delete();
-            CoordX++;
-            foreach (LevelElement wall in list)
-            {
-                if (wall is Wall)
-                {
-                    if (CoordX == wall.CoordX && CoordY == wall.CoordY)
-                    {
-                        CoordX--;
-                    }
-                }
-            }
+            MoveOneStep("right", list);
         }
         else if (Console.ReadKey().Key == ConsoleKey.DownArrow)
         {
             Delete();
-            CoordY++;
-            foreach (LevelElement wall in list)
-            {
-                if (wall is Wall)
-                {
-                    if (CoordX == wall.CoordX && CoordY == wall.CoordY)
-                    {
-                        CoordY--;
-                    }
-                }
-            }
+            MoveOneStep("down", list);
         }
         else if (Console.ReadKey().Key == ConsoleKey.UpArrow)
         {
             Delete();
-            CoordY--;
-            foreach (LevelElement wall in list)
-            {
-                if (wall is Wall)
-                {
-                    if (CoordX == wall.CoordX && CoordY == wall.CoordY)
-                    {
-                        CoordY++;
-                    }
-                }
-            }
+            MoveOneStep("up", list);
         }
         else if (Console.ReadKey().Key == ConsoleKey.End) Delete();
         
         Draw(element);
-    }
-
-    private void Delete()
-    {
-        Console.SetCursorPosition(CoordX, CoordY);
-        Console.Write(" ");
     }
 }
