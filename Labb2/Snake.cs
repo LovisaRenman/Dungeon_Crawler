@@ -16,51 +16,60 @@ class Snake : Enemy
     public override void Update(LevelElement element, List<LevelElement> list, int playerXCoord = 0, int playerYCoord = 0)
     {
         double hypotenuse = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX, CoordY);
-        bool hasMoved;
 
         Delete();
-        double distance = 2;
-        if (hypotenuse <= distance)
+        double fleeRange = 2;
+        if (hypotenuse <= fleeRange)
         {
-            if (playerYCoord == CoordY + 2 && playerXCoord == CoordX || playerYCoord == CoordY + 1 && playerXCoord == CoordX)
+            bool hasMoved = true;
+            if (playerYCoord >= CoordY && playerXCoord == CoordX)
             {
-                MoveOneStep("up", list);
-                //hasMoved = MoveOneStep("up", list);
-                //if (!hasMoved && playerXCoord >= CoordX--)
-                //{
-                //    hasMoved = MoveOneStep("left", list);
-                //    if (!hasMoved) MoveOneStep("right", list);
-                //}
+                hasMoved = MoveOneStep("up", list);
+                if (!hasMoved)
+                {
+                    double chooseWayLeft = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX - 1, CoordY);
+                    double chooseWayRight = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX + 1, CoordY);
+
+                    if (chooseWayLeft <= chooseWayRight) MoveOneStep("right", list);
+                    else if (chooseWayLeft >= chooseWayRight) MoveOneStep("left", list);
+                }
             }
-            else if (playerYCoord == CoordY - 2 && playerXCoord == CoordX || playerYCoord == CoordY - 1 && playerXCoord == CoordX)
+            else if (playerYCoord <= CoordY && playerXCoord == CoordX)
             {
-                MoveOneStep("down", list);
-                //hasMoved = MoveOneStep("down", list);
-                //if (!hasMoved && playerXCoord <= CoordX--)
-                //{
-                //    hasMoved = MoveOneStep("left", list);
-                //    if (!hasMoved) MoveOneStep("right", list);
-                //}
+                hasMoved = MoveOneStep("down", list);
+                if (!hasMoved)
+                {
+                    double chooseWayLeft = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX - 1, CoordY);
+                    double chooseWayRight = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX + 1, CoordY);
+
+                    if (chooseWayLeft <= chooseWayRight) MoveOneStep("right", list);
+                    else if (chooseWayLeft >= chooseWayRight) MoveOneStep("left", list);
+                }
             }
-            else if ( playerXCoord >= CoordX + 1 ) //&& playerYCoord == CoordY 
+            else if ( playerXCoord >= CoordX)
             {
-                MoveOneStep("left", list);
-                //hasMoved = MoveOneStep("left", list);
-                //if (!hasMoved && playerYCoord >= CoordY++)
-                //{
-                //    hasMoved = MoveOneStep("up", list);
-                //    if (!hasMoved) MoveOneStep("down", list);
-                //}
+                hasMoved = MoveOneStep("left", list);
+                if (!hasMoved)
+                {
+                    double chooseWayUp = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX, CoordY - 1);
+                    double chooseWayDown = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX, CoordY + 1);
+                    hasMoved = true;
+
+                    if (chooseWayUp <= chooseWayDown) hasMoved = MoveOneStep("down", list);
+                    else if (chooseWayUp >= chooseWayDown) hasMoved = MoveOneStep("up", list);
+                }
             }
-            else if (playerXCoord <= CoordX - 1 )
+            else if (playerXCoord <= CoordX)
             {
-                MoveOneStep("right", list);
-                //hasMoved = MoveOneStep("right", list);
-                //if (!hasMoved)
-                //{
-                //    hasMoved = MoveOneStep("up", list);
-                //    if (!hasMoved) MoveOneStep("down", list);
-                //}
+                hasMoved = MoveOneStep("right", list);
+                if (!hasMoved)
+                {
+                    double chooseWayUp = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX, CoordY - 1);
+                    double chooseWayDown = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX, CoordY + 1);
+
+                    if (chooseWayUp <= chooseWayDown) MoveOneStep("down", list);
+                    else if (chooseWayUp >= chooseWayDown) MoveOneStep("up", list);
+                }
             }
 
             // compare which spot is the futherst and not wall

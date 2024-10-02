@@ -1,9 +1,7 @@
 ﻿
-using System.Collections.Generic;
-using System.Numerics;
-using System.Security.Cryptography.X509Certificates;
 
-class Player : Entity
+
+class Player : Creature
 {
     public int DistanceFromPlayer { get; set; }
     public Player(int xCord, int yCord)

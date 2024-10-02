@@ -14,8 +14,8 @@ class Gameloop
         {
             if (player is Player)
             {
-                bool isPlayerAlive; // to later be implemented to stop the foreverloop if Player dies
-                while (true)
+                bool isPlayerAlive = true; // to later be implemented to stop the foreverloop if Player dies
+                while (isPlayerAlive)
                 {
                     (player as Player).Update(player, levelData.Elements);
                     foreach (LevelElement enemy in levelData.Elements)
