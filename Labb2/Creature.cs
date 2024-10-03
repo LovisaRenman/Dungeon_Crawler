@@ -22,29 +22,32 @@ abstract class Creature : LevelElement
         if (direction.ToLower() == "left")
         {
             CoordX--;
-            CoordX += PotentallyBlockStep(-1, list);
-            if (PotentallyBlockStep(-1, list) == 0) hasMoved = false;
+            int value = PotentallyBlockStep(-1, list);
+            CoordX += value;
+            if (value > 0) hasMoved = false;
         }
         if (direction.ToLower() == "right")
         {
             CoordX++;
-            CoordX += PotentallyBlockStep(1, list);
-            if (PotentallyBlockStep(1, list) == 0) hasMoved = false;
+            int value = PotentallyBlockStep(1, list);
+            CoordX += value;
+            if (value < 0) hasMoved = false;
 
         }
         if (direction.ToLower() == "down")
         {
             CoordY++;
-            CoordY += PotentallyBlockStep(1, list);
-            if (PotentallyBlockStep(1, list) == 0) hasMoved = false;
+            int value = PotentallyBlockStep(1, list);
+            CoordY += value;
+            if (value < 0) hasMoved = false;
 
         }
         if (direction.ToLower() == "up")
         {
             CoordY--;
-            CoordY += PotentallyBlockStep(-1, list);
-            if (PotentallyBlockStep(-1, list) == 0) hasMoved = false;
-
+            int value= PotentallyBlockStep(-1, list);
+            CoordY += value;
+            if (value > 0) hasMoved = false;
         }
 
         return hasMoved;

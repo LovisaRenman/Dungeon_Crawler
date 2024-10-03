@@ -30,8 +30,16 @@ class Snake : Enemy
                     double chooseWayLeft = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX - 1, CoordY);
                     double chooseWayRight = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX + 1, CoordY);
 
-                    if (chooseWayLeft <= chooseWayRight) MoveOneStep("right", list);
-                    else if (chooseWayLeft >= chooseWayRight) MoveOneStep("left", list);
+                    if (chooseWayLeft <= chooseWayRight)
+                    {
+                        hasMoved = MoveOneStep("right", list);
+                        if (!hasMoved) MoveOneStep("left", list);
+                    }
+                    else if (chooseWayLeft > chooseWayRight)
+                    {
+                        hasMoved = MoveOneStep("left", list);
+                        if (!hasMoved) MoveOneStep("right", list);
+                    }
                 }
             }
             else if (playerYCoord <= CoordY && playerXCoord == CoordX)
@@ -42,8 +50,16 @@ class Snake : Enemy
                     double chooseWayLeft = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX - 1, CoordY);
                     double chooseWayRight = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX + 1, CoordY);
 
-                    if (chooseWayLeft <= chooseWayRight) MoveOneStep("right", list);
-                    else if (chooseWayLeft >= chooseWayRight) MoveOneStep("left", list);
+                    if (chooseWayLeft <= chooseWayRight)
+                    {
+                        hasMoved = MoveOneStep("right", list);
+                        if (!hasMoved) MoveOneStep("left", list);
+                    }
+                    else if (chooseWayLeft > chooseWayRight)
+                    {
+                        hasMoved = MoveOneStep("left", list);
+                        if (!hasMoved) MoveOneStep("right", list);
+                    }
                 }
             }
             else if ( playerXCoord >= CoordX)
@@ -55,8 +71,16 @@ class Snake : Enemy
                     double chooseWayDown = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX, CoordY + 1);
                     hasMoved = true;
 
-                    if (chooseWayUp <= chooseWayDown) hasMoved = MoveOneStep("down", list);
-                    else if (chooseWayUp >= chooseWayDown) hasMoved = MoveOneStep("up", list);
+                    if (chooseWayUp <= chooseWayDown)
+                    {
+                        hasMoved = MoveOneStep("down", list);
+                        if (!hasMoved) MoveOneStep("up", list);
+                    }
+                    else if (chooseWayUp > chooseWayDown)
+                    {
+                        hasMoved = MoveOneStep("up", list);
+                        if (!hasMoved) MoveOneStep("down", list);
+                    }
                 }
             }
             else if (playerXCoord <= CoordX)
@@ -67,12 +91,18 @@ class Snake : Enemy
                     double chooseWayUp = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX, CoordY - 1);
                     double chooseWayDown = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX, CoordY + 1);
 
-                    if (chooseWayUp <= chooseWayDown) MoveOneStep("down", list);
-                    else if (chooseWayUp >= chooseWayDown) MoveOneStep("up", list);
+                    if (chooseWayUp < chooseWayDown)
+                    {
+                        hasMoved = MoveOneStep("down", list);
+                        if (!hasMoved) MoveOneStep("up", list);
+                    }
+                    else if (chooseWayUp >= chooseWayDown)
+                    {
+                        hasMoved = MoveOneStep("up", list);
+                        if (!hasMoved) MoveOneStep("down", list);
+                    }
                 }
             }
-
-            // compare which spot is the futherst and not wall
         }
 
         Draw(element);

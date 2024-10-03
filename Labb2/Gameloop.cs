@@ -22,7 +22,7 @@ class Gameloop
                     {
                         if (enemy is Rat)
                         {
-                            (enemy as Rat).Update(enemy, levelData.Elements, player.CoordX, player.CoordY);
+                            (enemy as Rat).Update(enemy, levelData.Elements);
                         }
                         else if (enemy is Snake)
                         {
