@@ -17,23 +17,23 @@ class Rat : Enemy
     {
         Random rnd = new Random();
         int direction = rnd.Next(0, 4);
-
+        bool hasMoved = true;
         Delete();
         if (direction == 0)
         {
-            MoveOneStep("left", list);
+            hasMoved = MoveOneStep("left", list);
         }
         else if (direction == 1)
         {
-            MoveOneStep("right", list);
+            hasMoved = MoveOneStep("right", list);         
         }
         else if (direction == 2)
         {
-            MoveOneStep("down", list);
+            hasMoved = MoveOneStep("down", list);
         }
         else if (direction == 3)
         {
-            MoveOneStep("up", list);
+            hasMoved = MoveOneStep("up", list);
         }
 
         Draw(element);

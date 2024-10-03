@@ -17,28 +17,32 @@ class Player : Creature
 
     public override void Update(LevelElement element, List<LevelElement> list, int xCoord = 0, int yCoord = 0)
     {
+        bool hasMoved = true;
+
         if (Console.ReadKey().Key == ConsoleKey.LeftArrow)
         {
             Delete();
-            MoveOneStep("left", list);
+            hasMoved = MoveOneStep("left", list);
         }
         else if (Console.ReadKey().Key == ConsoleKey.RightArrow)
         {
             Delete();
-            MoveOneStep("right", list);
+            hasMoved = MoveOneStep("right", list);
         }
         else if (Console.ReadKey().Key == ConsoleKey.DownArrow)
         {
             Delete();
-            MoveOneStep("down", list);
+            hasMoved = MoveOneStep("down", list);
         }
         else if (Console.ReadKey().Key == ConsoleKey.UpArrow)
         {
             Delete();
-            MoveOneStep("up", list);
+            hasMoved = MoveOneStep("up", list);
         }
         else if (Console.ReadKey().Key == ConsoleKey.End) Delete();
         
         Draw(element);
     }
+
+
 }

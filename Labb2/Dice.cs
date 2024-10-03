@@ -1,7 +1,15 @@
 ﻿
 internal class Dice
 {
-    internal int DiceThrow(int numberOfDice, int sidesPerDice, int Modifier)
+    public void AttackDice()
+    {
+
+    }
+    public void DefenceDice()
+    {
+
+    }
+    private int DiceThrow(int numberOfDice, int sidesPerDice, int Modifier)
     {
         int diceThrow = Modifier;
         Random rnd = new();

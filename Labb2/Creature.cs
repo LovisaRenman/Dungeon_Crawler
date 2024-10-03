@@ -1,13 +1,14 @@
 ﻿
+using System.Collections.Generic;
+
 abstract class Creature : LevelElement
 {
     public int HealthPoints { get; set; }
     public int Defence { get; set; }
     public int Attack { get; set; }
-    public Dice AttackDice { get; set; }
-    public Dice DefenceDice { get; set; }
+    
 
-    public abstract void Update(LevelElement element, List<LevelElement> listint, int playerXCoord = 0, int playerYCoord = 0);
+    public abstract void Update(LevelElement element, List<LevelElement> list, int playerXCoord = 0, int playerYCoord = 0);
 
     public void Delete()
     {
@@ -15,76 +16,63 @@ abstract class Creature : LevelElement
         Console.Write(" ");
     }
 
-    public virtual bool MoveOneStep(string direction, List<LevelElement> list)
+    public bool MoveOneStep(string direction, List<LevelElement> list)
     {
         bool hasMoved = true;
         if (direction.ToLower() == "left")
         {
             CoordX--;
-            foreach (LevelElement element in list)
-            {
-                if (element is Wall)
-                {
-                    if (CoordX == element.CoordX && CoordY == element.CoordY)
-                    {
-                        CoordX++;
-                        hasMoved = false;
-                        break;
-                    }
-                }
-            }
+            CoordX += PotentallyBlockStep(-1, list);
+            if (PotentallyBlockStep(-1, list) == 0) hasMoved = false;
         }
         if (direction.ToLower() == "right")
         {
             CoordX++;
-            foreach (LevelElement element in list)
-            {
-                if (element is Wall)
-                {
-                    if (CoordX == element.CoordX && CoordY == element.CoordY)
-                    {
-                        CoordX--;
-                        hasMoved = false;
-                        break;
-                    }
-                }
+            CoordX += PotentallyBlockStep(1, list);
+            if (PotentallyBlockStep(1, list) == 0) hasMoved = false;
 
-            }
         }
         if (direction.ToLower() == "down")
         {
             CoordY++;
-            foreach (LevelElement element in list)
-            {
-                if (element is Wall)
-                {
-                    if (CoordX == element.CoordX && CoordY == element.CoordY)
-                    {
-                        CoordY--;
-                        hasMoved = false;
-                        break;
-                    }
-                }
-            }
+            CoordY += PotentallyBlockStep(1, list);
+            if (PotentallyBlockStep(1, list) == 0) hasMoved = false;
+
         }
         if (direction.ToLower() == "up")
         {
             CoordY--;
-            foreach (LevelElement element in list)
-            {
-                if (element is Wall)
-                {
-                    if (CoordX == element.CoordX && CoordY == element.CoordY)
-                    {
-                        CoordY++;
-                        hasMoved = false;
-                        break;
-                    }
-                }
-            }
+            CoordY += PotentallyBlockStep(-1, list);
+            if (PotentallyBlockStep(-1, list) == 0) hasMoved = false;
+
         }
 
         return hasMoved;
     }
+
+    public int PotentallyBlockStep(int direction, List<LevelElement> list)
+    {
+        int BlockOrMove = 0;
+        foreach (LevelElement element in list)
+        {
+            if (element != this)
+            {
+                if (CoordX == element.CoordX && CoordY == element.CoordY && direction < 0)
+                {
+                    BlockOrMove++;
+                    break;
+                }
+                else if (CoordX == element.CoordX && CoordY == element.CoordY && direction > 0)
+                {
+                    BlockOrMove--;
+                    break;
+                }
+            }
+        }
+
+        return BlockOrMove;
+    }
+
+
 }
 
