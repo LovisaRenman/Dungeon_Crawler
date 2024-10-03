@@ -20,4 +20,10 @@ abstract class LevelElement
         Console.SetCursorPosition(element.CoordX, element.CoordY);
         Console.Write(element.CharacterChar);
     }
+
+    public void Delete()
+    {
+        Console.SetCursorPosition(CoordX, CoordY);
+        Console.Write(" ");
+    }
 }

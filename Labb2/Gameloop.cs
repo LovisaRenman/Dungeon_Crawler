@@ -1,6 +1,4 @@
 ﻿
-
-
 class Gameloop 
 {
     public void PlayGame()
@@ -8,7 +6,7 @@ class Gameloop
         Console.CursorVisible = false;
         LevelData levelData = new();
         levelData.Load(@"Level\Level1.txt");
-        levelData.DrawFromList();
+        //levelData.DrawFromList();
 
         foreach (LevelElement player in levelData.Elements)
         {
@@ -18,17 +16,43 @@ class Gameloop
                 while (isPlayerAlive)
                 {
                     (player as Player).Update(player, levelData.Elements);
-                    foreach (LevelElement enemy in levelData.Elements)
+                    player.Draw(player);
+
+                    foreach (LevelElement element in levelData.Elements)
                     {
-                        if (enemy is Rat)
-                        {
-                            (enemy as Rat).Update(enemy, levelData.Elements);
+                        if (element is Rat)
+                        {                            
+                            (element as Rat).Update(element, levelData.Elements);
+                            double distance = element.DistanceFromPlayer(player.CoordX, player.CoordY, element.CoordX, element.CoordY);
+                            double DrawRange = 5;
+                            if (distance < DrawRange)
+                            {
+                                element.Draw(element);
+                            }
+                            else element.Delete();
                         }
-                        else if (enemy is Snake)
+                        else if (element is Snake)
                         {
-                            (enemy as Snake).Update(enemy, levelData.Elements, player.CoordX, player.CoordY);
+                            (element as Snake).Update(element, levelData.Elements, player.CoordX, player.CoordY);
+                            double distance = element.DistanceFromPlayer(player.CoordX, player.CoordY, element.CoordX, element.CoordY);
+                            double DrawRange = 5;
+                            if (distance < DrawRange)
+                            {
+                                element.Draw(element);
+                            }
+                            else element.Delete();
+                        }
+                        else if (element is Wall)
+                        {
+                            double distance = element.DistanceFromPlayer(player.CoordX, player.CoordY, element.CoordX, element.CoordY);
+                            double DrawRange = 5;
+                            if (distance < DrawRange)
+                            {
+                                element.Draw(element);
+                            }
                         }
                     }
+                    player.Draw(player);
                 }                               
             }
         }

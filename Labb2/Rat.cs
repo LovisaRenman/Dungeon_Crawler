@@ -22,18 +22,22 @@ class Rat : Enemy
         if (direction == 0)
         {
             hasMoved = MoveOneStep("left", list);
+            AttackPlayer(hasMoved, list);
         }
         else if (direction == 1)
         {
             hasMoved = MoveOneStep("right", list);         
+            AttackPlayer(hasMoved, list);
         }
         else if (direction == 2)
         {
             hasMoved = MoveOneStep("down", list);
+            AttackPlayer(hasMoved, list);
         }
         else if (direction == 3)
         {
             hasMoved = MoveOneStep("up", list);
+            AttackPlayer(hasMoved, list);
         }
 
         Draw(element);

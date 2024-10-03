@@ -10,11 +10,7 @@ abstract class Creature : LevelElement
 
     public abstract void Update(LevelElement element, List<LevelElement> list, int playerXCoord = 0, int playerYCoord = 0);
 
-    public void Delete()
-    {
-        Console.SetCursorPosition(CoordX, CoordY);
-        Console.Write(" ");
-    }
+
 
     public bool MoveOneStep(string direction, List<LevelElement> list)
     {
@@ -77,5 +73,49 @@ abstract class Creature : LevelElement
     }
 
 
+
+    public void AttackAnimation(int direction)
+    {
+        if (direction == -1)
+        {
+            Delete();
+            CoordX--;
+            Draw(this);
+            Thread.Sleep(500);
+            Delete();
+            CoordX++;
+            Draw(this);
+        }
+        else if (direction == 1)
+        {
+            Delete();
+            CoordX++;
+            Draw(this);
+            Thread.Sleep(500);
+            Delete();
+            CoordX--;
+            Draw(this);
+        }
+        else if (direction == -2)
+        {
+            Delete();
+            CoordY--;
+            Draw(this);
+            Thread.Sleep(500);
+            Delete();
+            CoordY++;
+            Draw(this);
+        }
+        else if (direction == 2)
+        {
+            Delete();
+            CoordY++;
+            Draw(this);
+            Thread.Sleep(500);
+            Delete();
+            CoordY--;
+            Draw(this);
+        }
+    }
 }
 
