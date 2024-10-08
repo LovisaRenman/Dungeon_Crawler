@@ -12,25 +12,21 @@ abstract class Enemy : Creature
                 {
                     AttackAnimation(-1);
                     isAlive = DamagePlayer(player);
-                    if (isAlive) (player as Player).AttackAnimation(-1);
                 }
                 else if (player is Player && CoordX + 1 == player.CoordX && CoordY == player.CoordY)
                 {
                     AttackAnimation(1);
                     isAlive = DamagePlayer(player);
-                    if (isAlive) (player as Player).AttackAnimation(1);
                 }
                 else if (player is Player && CoordX == player.CoordX && CoordY - 1 == player.CoordY)
                 {
                     AttackAnimation(-2);
                     isAlive = DamagePlayer(player);
-                    if (isAlive) (player as Player).AttackAnimation(2);
                 }
                 else if (player is Player && CoordX == player.CoordX && CoordY + 1 == player.CoordY)
                 {
                     AttackAnimation(2);
                     isAlive = DamagePlayer(player);
-                    if (isAlive) (player as Player).AttackAnimation(-2);
                 }
             }
         }
@@ -52,7 +48,7 @@ abstract class Enemy : Creature
                 HealthPoints = HealthPoints - damage;
                 (player as Player).WriteAttack(this, damage);
             }
-            else isAlive = false;
+            else (player as Player).IsAlive = false;
 
         }
         else if (player is Player && this is Snake)
@@ -69,8 +65,7 @@ abstract class Enemy : Creature
                 HealthPoints = HealthPoints - damage;
                 (player as Player).WriteAttack(this, damage);
             }
-            else isAlive = false;
-
+            else (player as Player).IsAlive = false;
         }
         return isAlive;
     }

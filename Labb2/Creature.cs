@@ -1,8 +1,4 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
 abstract class Creature : LevelElement
 {
     public int HealthPoints { get; set; }
@@ -174,20 +170,18 @@ abstract class Creature : LevelElement
         {
             Console.SetCursorPosition(0, 20);
             Console.Write(" ".PadRight(Console.BufferWidth));
-            Console.SetCursorPosition(0, 20);
         }
         else if (this is Player)
         {
             Console.SetCursorPosition(0, 19);
             Console.Write(" ".PadRight(Console.BufferWidth));
-            Console.SetCursorPosition(0, 19);
         }
 
         if (element is Rat)
         {
             if ((element as Rat).HealthPoints > 0) Console.WriteLine($"{Name} attacked with {(this as Player).PlayerAttackDice}. " +
-                $"{(element as Rat).Name} defended with {(element as Rat).RatDefenceDice} and recived {damage} damage {(element as Rat).Name}" +
-                $" remaining Hp is {(element as Rat).HealthPoints}");
+                $"{(element as Rat).Name} defended with {(element as Rat).RatDefenceDice} and recived {damage} damage " +
+                $"{(element as Rat).Name} remaining Hp is {(element as Rat).HealthPoints}");
             else Console.WriteLine($"{Name} attacked with {(this as Player).PlayerAttackDice}. {(element as Rat).Name} defended with " +
                 $"{(element as Rat).RatDefenceDice} and recived {damage} damage {(element as Rat).Name} remaining Hp is {0}");
         }

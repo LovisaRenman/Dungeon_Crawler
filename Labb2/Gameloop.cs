@@ -51,8 +51,8 @@ class Gameloop
             }
             isPlayerAlive = levelData.Player.IsAlive;
         }
-        //Console.Clear();
-        //Console.WriteLine("Game Over");
+        Console.Clear();
+        Console.WriteLine("Game Over");
     }
 }
 
