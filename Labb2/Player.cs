@@ -77,7 +77,7 @@ class Player : Creature
                 }
                 if (enemy is Enemy && CoordX == enemy.CoordX && CoordY + 1 == enemy.CoordY && direction == "down")
                 {
-                    AttackAnimation(2); 
+                    AttackAnimation(2);
                     DamageEnemy(enemy);
                     if (!(enemy as Enemy).IsAlive) enemiesToRemove.Add(enemy);
                 }
@@ -94,32 +94,34 @@ class Player : Creature
         if (enemy is Rat)
         {
             int damage = PlayerAttackDice.Throw() - (enemy as Rat).RatDefenceDice.Throw();
-            if (damage < 0) damage = 0;
+            if (damage <= 0) damage = 0;
             else (enemy as Rat).HealthPoints = (enemy as Rat).HealthPoints - damage;
             WriteAttack(enemy, damage);
             
             if ((enemy as Rat).HealthPoints > 0)
             {
                 damage = (enemy as Rat).RatAttackDice.Throw() - PlayerDefenceDice.Throw();
-                if (damage < 0) damage = 0;
+                if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
                 (enemy as Rat).WriteAttack(this, damage);
+                if (HealthPoints < 0) IsAlive = false;
             }
             else (enemy as Rat).IsAlive = false;
         }
         else if (enemy is Snake)
         {
             int damage = PlayerAttackDice.Throw() - (enemy as Snake).SnakeDefenceDice.Throw();
-            if (damage < 0) damage = 0;
+            if (damage <= 0) damage = 0;
             else (enemy as Snake).HealthPoints = (enemy as Snake).HealthPoints - damage;
             WriteAttack(enemy, damage);
 
             if ((enemy as Snake).HealthPoints > 0)
             {
                 damage = (enemy as Snake).SnakeAttackDice.Throw() - PlayerDefenceDice.Throw();
-                if (damage < 0) damage = 0;
+                if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
                 (enemy as Snake).WriteAttack(this, damage);
+                if (HealthPoints < 0) IsAlive = false;
             }
             else (enemy as Snake).IsAlive = false;
         }

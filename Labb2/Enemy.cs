@@ -42,9 +42,10 @@ abstract class Enemy : Creature
             if ((player as Player).HealthPoints > 0)
             {
                 damage = (player as Player).PlayerAttackDice.Throw() - RatDefenceDice.Throw();
-                if (damage < 0) damage = 0;
+                if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
                 (player as Player).WriteAttack(this, damage);
+                if (HealthPoints < 0) IsAlive = false;
             }
             else (player as Player).IsAlive = false;
 
@@ -59,9 +60,10 @@ abstract class Enemy : Creature
             if ((player as Player).HealthPoints > 0)
             {
                 damage = (player as Player).PlayerAttackDice.Throw() - SnakeDefenceDice.Throw();
-                if (damage < 0) damage = 0;
+                if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
                 (player as Player).WriteAttack(this, damage);
+                if (HealthPoints < 0) IsAlive = false;
             }
             else (player as Player).IsAlive = false;
         }

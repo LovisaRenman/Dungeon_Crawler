@@ -13,14 +13,8 @@ class Gameloop
         while (isPlayerAlive)
         {
 
-
             levelData.Player.Draw(levelData.Player);
             levelData.Player.Update(levelData.Player, levelData.Elements, levelData);
-
-            //Console.SetCursorPosition(0, 19);
-            //Console.Write(" ".PadRight(Console.BufferWidth));
-            //Console.SetCursorPosition(0, 20);
-            //Console.Write(" ".PadRight(Console.BufferWidth));
 
             foreach (LevelElement element in levelData.Elements)
             {
@@ -63,6 +57,7 @@ class Gameloop
             Console.Write($"Player:".PadRight(10));
             Console.Write($"Healthpoints: {levelData.Player.HealthPoints}".PadRight(30));
             Console.Write($"Turn: {turn}".PadRight(20));
+
             isPlayerAlive = levelData.Player.IsAlive;
         }
         Console.Clear();

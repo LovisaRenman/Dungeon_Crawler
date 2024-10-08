@@ -170,11 +170,13 @@ abstract class Creature : LevelElement
         {
             Console.SetCursorPosition(0, 19);
             Console.Write(" ".PadRight(Console.BufferWidth));
+            Console.SetCursorPosition(0, 19);
         }
         else if (this is Player)
         {
             Console.SetCursorPosition(0, 20);
             Console.Write(" ".PadRight(Console.BufferWidth));
+            Console.SetCursorPosition(0, 20);
         }
 
         if (element is Rat)
