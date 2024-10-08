@@ -1,51 +1,49 @@
 ﻿
 abstract class Enemy : Creature
 {
-    public void AttackPlayer(bool hasMoved, List<LevelElement> list)
+    public void AttackPlayer(bool hasMoved, string direction, List<LevelElement> list)
     {
         if (!hasMoved)
         {
             foreach (var player in list)
             {
-                bool isAlive = true;
-                if (player is Player && CoordX - 1 == player.CoordX && CoordY == player.CoordY)
+                if (player is Player && CoordX - 1 == player.CoordX && CoordY == player.CoordY && direction == "left")
                 {
                     AttackAnimation(-1);
-                    isAlive = DamagePlayer(player);
+                    DamagePlayer(player);
                 }
-                else if (player is Player && CoordX + 1 == player.CoordX && CoordY == player.CoordY)
+                else if (player is Player && CoordX + 1 == player.CoordX && CoordY == player.CoordY && direction == "right")
                 {
                     AttackAnimation(1);
-                    isAlive = DamagePlayer(player);
+                    DamagePlayer(player);
                 }
-                else if (player is Player && CoordX == player.CoordX && CoordY - 1 == player.CoordY)
+                else if (player is Player && CoordX == player.CoordX && CoordY - 1 == player.CoordY && direction == "up")
                 {
                     AttackAnimation(-2);
-                    isAlive = DamagePlayer(player);
+                    DamagePlayer(player);
                 }
-                else if (player is Player && CoordX == player.CoordX && CoordY + 1 == player.CoordY)
+                else if (player is Player && CoordX == player.CoordX && CoordY + 1 == player.CoordY && direction == "down")
                 {
                     AttackAnimation(2);
-                    isAlive = DamagePlayer(player);
+                    DamagePlayer(player);
                 }
             }
         }
     }
-    public bool DamagePlayer(LevelElement player)
+    public void DamagePlayer(LevelElement player)
     {
-        bool isAlive = true;
         if (player is Player && this is Rat)
         {
             int damage = RatAttackDice.Throw() - (player as Player).PlayerDefenceDice.Throw();
             if (damage <= 0) damage = 0;
-            (player as Player).HealthPoints = (player as Player).HealthPoints - damage;
+            else (player as Player).HealthPoints = (player as Player).HealthPoints - damage;
             WriteAttack(player, damage);
 
             if ((player as Player).HealthPoints > 0)
             {
                 damage = (player as Player).PlayerAttackDice.Throw() - RatDefenceDice.Throw();
                 if (damage < 0) damage = 0;
-                HealthPoints = HealthPoints - damage;
+                else HealthPoints = HealthPoints - damage;
                 (player as Player).WriteAttack(this, damage);
             }
             else (player as Player).IsAlive = false;
@@ -55,18 +53,17 @@ abstract class Enemy : Creature
         {
             int damage = SnakeAttackDice.Throw() - (player as Player).PlayerDefenceDice.Throw();
             if (damage <= 0) damage = 0;
-            (player as Player).HealthPoints = (player as Player).HealthPoints - damage;
+            else (player as Player).HealthPoints = (player as Player).HealthPoints - damage;
             WriteAttack(player, damage);
 
             if ((player as Player).HealthPoints > 0)
             {
                 damage = (player as Player).PlayerAttackDice.Throw() - SnakeDefenceDice.Throw();
                 if (damage < 0) damage = 0;
-                HealthPoints = HealthPoints - damage;
+                else HealthPoints = HealthPoints - damage;
                 (player as Player).WriteAttack(this, damage);
             }
             else (player as Player).IsAlive = false;
         }
-        return isAlive;
     }
 }

@@ -154,13 +154,13 @@ abstract class Creature : LevelElement
     }
     public void WriteAttack(LevelElement element, int damage)    
     {
-        //if (this is Player && (this as Player).HealthPoints > 66
-        //    || this is Rat && (this as Rat).HealthPoints > 6
-        //    || this is Snake && (this as Snake).HealthPoints > 16)
+        //if (this is Player player && player.HealthPoints > 66
+        //    || this is Rat rat && rat.HealthPoints > 6
+        //    || this is Snake snake && snake.HealthPoints > 16)
         //    Console.ForegroundColor = ConsoleColor.Green;
-        //else if (this is Player && (this as Player).HealthPoints > 33
-        //    || this is Rat && (this as Rat).HealthPoints > 3
-        //    || this is Snake && (this as Snake).HealthPoints > 8)
+        //else if (this is Player p && p.HealthPoints > 33
+        //    || this is Rat r && r.HealthPoints > 3
+        //    || this is Snake s && s.HealthPoints > 8)
         //    Console.ForegroundColor = ConsoleColor.Yellow;
         //else Console.ForegroundColor = ConsoleColor.Red;
 
@@ -168,12 +168,12 @@ abstract class Creature : LevelElement
 
         if (this is Enemy)
         {
-            Console.SetCursorPosition(0, 20);
+            Console.SetCursorPosition(0, 19);
             Console.Write(" ".PadRight(Console.BufferWidth));
         }
         else if (this is Player)
         {
-            Console.SetCursorPosition(0, 19);
+            Console.SetCursorPosition(0, 20);
             Console.Write(" ".PadRight(Console.BufferWidth));
         }
 
