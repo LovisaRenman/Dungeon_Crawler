@@ -1,22 +1,25 @@
 ﻿
 internal class Dice
 {
-    public void AttackDice()
-    {
+    public int NumberOfDice { get; set; }
+    public int SidesPerDice { get; set; }
+    public int Modifier { get; set; }
 
-    }
-    public void DefenceDice()
+    public Dice(int numberOfDice, int sidesPerDice, int modifier)
     {
-
+        NumberOfDice = numberOfDice;
+        SidesPerDice = sidesPerDice;
+        Modifier = modifier;
     }
-    private int DiceThrow(int numberOfDice, int sidesPerDice, int Modifier)
+
+    public int Throw()
     {
         int diceThrow = Modifier;
         Random rnd = new();
 
-        for (int i = 0; i < numberOfDice; i++)
+        for (int i = 0; i < NumberOfDice; i++)
         {
-            diceThrow += rnd.Next(0, sidesPerDice + 1);
+            diceThrow += rnd.Next(1, SidesPerDice + 1);
         }
 
         return diceThrow;
@@ -24,7 +27,7 @@ internal class Dice
 
     public override string ToString()
     {
-        return base.ToString(); // to be implementet
+        return $"{NumberOfDice}d{SidesPerDice}+{Modifier}";
     }
 }
 

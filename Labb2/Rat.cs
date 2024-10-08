@@ -1,6 +1,6 @@
 ﻿
 class Rat : Enemy
-{
+{   
     public Rat(int xCord, int yCord)
     {
         CharacterChar = 'r';
@@ -11,9 +11,10 @@ class Rat : Enemy
 
         Name = "Rat";
         HealthPoints = 10;
+        IsAlive = true;
     }
 
-    public override void Update(LevelElement element, List<LevelElement> list, int playerXCoord = 0, int playerYCoord = 0)
+    public override void Update(LevelElement element, List<LevelElement> list, LevelData leveldata, int playerXCoord = 0, int playerYCoord = 0)
     {
         Random rnd = new Random();
         int direction = rnd.Next(0, 4);

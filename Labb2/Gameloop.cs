@@ -8,54 +8,51 @@ class Gameloop
         levelData.Load(@"Level\Level1.txt");
         //levelData.DrawFromList();
 
-        foreach (LevelElement player in levelData.Elements)
+        bool isPlayerAlive = true;
+        while (isPlayerAlive)
         {
-            if (player is Player)
-            {
-                bool isPlayerAlive = true; // to later be implemented to stop the foreverloop if Player dies
-                while (isPlayerAlive)
-                {
-                    (player as Player).Update(player, levelData.Elements);
-                    player.Draw(player);
+            levelData.Player.Draw(levelData.Player);
+            levelData.Player.Update(levelData.Player, levelData.Elements, levelData);
 
-                    foreach (LevelElement element in levelData.Elements)
+            foreach (LevelElement element in levelData.Elements)
+            {
+                if (element is Rat)
+                {                            
+                    (element as Rat).Update(element, levelData.Elements, levelData);
+                    double distance = element.DistanceFromPlayer(levelData.Player.CoordX, levelData.Player.CoordY, element.CoordX, element.CoordY);
+                    double drawRange = 5;
+                    if (distance < drawRange)
                     {
-                        if (element is Rat)
-                        {                            
-                            (element as Rat).Update(element, levelData.Elements);
-                            double distance = element.DistanceFromPlayer(player.CoordX, player.CoordY, element.CoordX, element.CoordY);
-                            double DrawRange = 5;
-                            if (distance < DrawRange)
-                            {
-                                element.Draw(element);
-                            }
-                            else element.Delete();
-                        }
-                        else if (element is Snake)
-                        {
-                            (element as Snake).Update(element, levelData.Elements, player.CoordX, player.CoordY);
-                            double distance = element.DistanceFromPlayer(player.CoordX, player.CoordY, element.CoordX, element.CoordY);
-                            double DrawRange = 5;
-                            if (distance < DrawRange)
-                            {
-                                element.Draw(element);
-                            }
-                            else element.Delete();
-                        }
-                        else if (element is Wall)
-                        {
-                            double distance = element.DistanceFromPlayer(player.CoordX, player.CoordY, element.CoordX, element.CoordY);
-                            double DrawRange = 5;
-                            if (distance < DrawRange)
-                            {
-                                element.Draw(element);
-                            }
-                        }
+                        element.Draw(element);
                     }
-                    player.Draw(player);
-                }                               
+                    else element.Delete();
+                }
+                else if (element is Snake)
+                {
+                    (element as Snake).Update(element, levelData.Elements, levelData, levelData.Player.CoordX, levelData.Player.CoordY);
+                    double distance = element.DistanceFromPlayer(levelData.Player.CoordX, levelData.Player.CoordY, element.CoordX, element.CoordY);
+                    double drawRange = 5;
+                    if (distance < drawRange)
+                    {
+                        element.Draw(element);
+                    }
+                    else element.Delete();
+
+                }
+                else if (element is Wall)
+                {
+                    double distance = element.DistanceFromPlayer(levelData.Player.CoordX, levelData.Player.CoordY, element.CoordX, element.CoordY);
+                    double drawRange = 5;
+                    if (distance < drawRange)
+                    {
+                        element.Draw(element);
+                    }
+                }
             }
+            isPlayerAlive = levelData.Player.IsAlive;
         }
+        //Console.Clear();
+        //Console.WriteLine("Game Over");
     }
 }
 

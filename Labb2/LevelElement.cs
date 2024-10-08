@@ -1,6 +1,7 @@
 ﻿
 abstract class LevelElement
 {
+
     public int CoordX { get; set; }
     public int CoordY { get; set; }
     public char CharacterChar { get; set; }

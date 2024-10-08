@@ -1,6 +1,6 @@
 ﻿
 class Snake : Enemy
-{
+{ 
     public Snake(int xCord, int yCord)
     {
         CharacterChar = 's';
@@ -11,9 +11,12 @@ class Snake : Enemy
 
         Name = "Snake";
         HealthPoints = 25;
+        IsAlive = true;
     }
 
-    public override void Update(LevelElement element, List<LevelElement> list, int playerXCoord = 0, int playerYCoord = 0)
+
+
+    public override void Update(LevelElement element, List<LevelElement> list, LevelData leveldata, int playerXCoord = 0, int playerYCoord = 0)
     {
         double hypotenuse = DistanceFromPlayer(playerXCoord, playerYCoord, CoordX, CoordY);
 

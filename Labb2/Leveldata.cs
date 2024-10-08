@@ -7,6 +7,16 @@ class LevelData : LevelElement
     {
         get { return elements; }
     }
+    public void RemoveEnemy(LevelElement enemy)
+    {
+        Console.SetCursorPosition(enemy.CoordX, enemy.CoordY);
+        Console.Write(" ");
+
+        elements.Remove(enemy);
+    }
+
+    public Player Player { get; private set; }
+
     public void Load(string fileName)
     {
         using (StreamReader reader = new StreamReader(fileName))
@@ -36,7 +46,8 @@ class LevelData : LevelElement
                             }
                             else if (currentChar == 64) // @
                             {
-                                elements.Add(new Player(j, i));
+                                Player = new Player(j, i);
+                                elements.Add(Player);
                             }
                         }
                         reader.ReadLine();
@@ -48,9 +59,9 @@ class LevelData : LevelElement
 
     public void DrawFromList()
     {
-        foreach (var entity in elements)
+        foreach (var element in elements)
         {
-            Draw(entity);
+            Draw(element);
         }
     }
 }
