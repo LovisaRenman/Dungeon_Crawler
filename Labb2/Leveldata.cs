@@ -1,8 +1,10 @@
 ﻿
-
 class LevelData : LevelElement
 {
     private List<LevelElement> elements = new List<LevelElement>();
+
+    public List<LevelElement> enemiesToRemove = new();
+
     public List<LevelElement> Elements 
     {
         get { return elements; }

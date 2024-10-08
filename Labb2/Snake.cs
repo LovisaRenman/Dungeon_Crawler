@@ -11,6 +11,7 @@ class Snake : Enemy
 
         Name = "Snake";
         HealthPoints = 25;
+        OriginalHealthPoints = HealthPoints;
         IsAlive = true;
     }
 

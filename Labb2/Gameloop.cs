@@ -16,6 +16,7 @@ class Gameloop
             levelData.Player.Draw(levelData.Player);
             levelData.Player.Update(levelData.Player, levelData.Elements, levelData);
 
+
             foreach (LevelElement element in levelData.Elements)
             {
                 if (element is Rat)
@@ -57,6 +58,11 @@ class Gameloop
             Console.Write($"Player:".PadRight(10));
             Console.Write($"Healthpoints: {levelData.Player.HealthPoints}".PadRight(30));
             Console.Write($"Turn: {turn}".PadRight(20));
+
+            foreach (var enemy in levelData.enemiesToRemove)
+            {
+                levelData.RemoveEnemy(enemy);
+            }
 
             isPlayerAlive = levelData.Player.IsAlive;
         }

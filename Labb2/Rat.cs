@@ -11,6 +11,7 @@ class Rat : Enemy
 
         Name = "Rat";
         HealthPoints = 10;
+        OriginalHealthPoints = HealthPoints;
         IsAlive = true;
     }
 
@@ -23,22 +24,22 @@ class Rat : Enemy
         if (direction == 0)
         {
             hasMoved = MoveOneStep("left", list);
-            AttackPlayer(hasMoved, "left", list);
+            AttackPlayer(hasMoved, "left", leveldata, list);
         }
         else if (direction == 1)
         {
             hasMoved = MoveOneStep("right", list);         
-            AttackPlayer(hasMoved, "right", list);
+            AttackPlayer(hasMoved, "right", leveldata, list);
         }
         else if (direction == 2)
         {
             hasMoved = MoveOneStep("down", list);
-            AttackPlayer(hasMoved, "down", list);
+            AttackPlayer(hasMoved, "down", leveldata, list);
         }
         else if (direction == 3)
         {
             hasMoved = MoveOneStep("up", list);
-            AttackPlayer(hasMoved, "up", list);
+            AttackPlayer(hasMoved, "up", leveldata, list);
         }
 
         Draw(element);

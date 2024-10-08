@@ -10,6 +10,7 @@ class Player : Creature
         CoordY = yCord;
 
         HealthPoints = 100;
+        OriginalHealthPoints = HealthPoints;
         Name = "Player";
         IsAlive = true;
     }

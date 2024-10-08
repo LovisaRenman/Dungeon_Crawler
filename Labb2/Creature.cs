@@ -1,6 +1,7 @@
 ﻿
 abstract class Creature : LevelElement
 {
+    public int OriginalHealthPoints { get; set; }
     public int HealthPoints { get; set; }
     public bool IsAlive { get; set; }
     public int Defence { get; set; }
@@ -154,17 +155,12 @@ abstract class Creature : LevelElement
     }
     public void WriteAttack(LevelElement element, int damage)    
     {
-        //if (this is Player player && player.HealthPoints > 66
-        //    || this is Rat rat && rat.HealthPoints > 6
-        //    || this is Snake snake && snake.HealthPoints > 16)
-        //    Console.ForegroundColor = ConsoleColor.Green;
-        //else if (this is Player p && p.HealthPoints > 33
-        //    || this is Rat r && r.HealthPoints > 3
-        //    || this is Snake s && s.HealthPoints > 8)
-        //    Console.ForegroundColor = ConsoleColor.Yellow;
-        //else Console.ForegroundColor = ConsoleColor.Red;
+        double percentageOfHealth = Convert.ToDouble((element as Creature).HealthPoints) / Convert.ToDouble((element as Creature).OriginalHealthPoints);
 
-        Console.ForegroundColor = ConsoleColor.White;
+        if (percentageOfHealth > 0.66) Console.ForegroundColor = ConsoleColor.Green;
+        else if (percentageOfHealth > 0.33) Console.ForegroundColor = ConsoleColor.Yellow;
+        else Console.ForegroundColor = ConsoleColor.Red;
+
 
         if (this is Enemy)
         {

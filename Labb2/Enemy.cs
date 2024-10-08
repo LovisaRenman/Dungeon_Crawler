@@ -1,36 +1,37 @@
 ﻿
 abstract class Enemy : Creature
 {
-    public void AttackPlayer(bool hasMoved, string direction, List<LevelElement> list)
+    public void AttackPlayer(bool hasMoved, string direction, LevelData levelData, List<LevelElement> list)
     {
         if (!hasMoved)
         {
+            
             foreach (var player in list)
             {
                 if (player is Player && CoordX - 1 == player.CoordX && CoordY == player.CoordY && direction == "left")
                 {
                     AttackAnimation(-1);
-                    DamagePlayer(player);
+                    DamagePlayer(player, levelData.enemiesToRemove);
                 }
                 else if (player is Player && CoordX + 1 == player.CoordX && CoordY == player.CoordY && direction == "right")
                 {
                     AttackAnimation(1);
-                    DamagePlayer(player);
+                    DamagePlayer(player, levelData.enemiesToRemove);
                 }
                 else if (player is Player && CoordX == player.CoordX && CoordY - 1 == player.CoordY && direction == "up")
                 {
                     AttackAnimation(-2);
-                    DamagePlayer(player);
+                    DamagePlayer(player, levelData.enemiesToRemove);
                 }
                 else if (player is Player && CoordX == player.CoordX && CoordY + 1 == player.CoordY && direction == "down")
                 {
                     AttackAnimation(2);
-                    DamagePlayer(player);
+                    DamagePlayer(player, levelData.enemiesToRemove);
                 }
             }
         }
     }
-    public void DamagePlayer(LevelElement player)
+    public void DamagePlayer(LevelElement player, List<LevelElement> enemiesToRemove)
     {
         if (player is Player && this is Rat)
         {
@@ -45,7 +46,11 @@ abstract class Enemy : Creature
                 if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
                 (player as Player).WriteAttack(this, damage);
-                if (HealthPoints < 0) IsAlive = false;
+                if (HealthPoints < 0)
+                {
+                    IsAlive = false;
+                    enemiesToRemove.Add(this);
+                }
             }
             else (player as Player).IsAlive = false;
 
@@ -63,7 +68,11 @@ abstract class Enemy : Creature
                 if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
                 (player as Player).WriteAttack(this, damage);
-                if (HealthPoints < 0) IsAlive = false;
+                if (HealthPoints < 0) 
+                { 
+                    IsAlive = false;
+                    enemiesToRemove.Add(this);
+                }
             }
             else (player as Player).IsAlive = false;
         }
