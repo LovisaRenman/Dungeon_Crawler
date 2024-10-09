@@ -10,9 +10,9 @@ abstract class LevelElement
     {
         double deltaX = (playerXCoord - elementXCoord);
         double deltaY = (playerYCoord - elementYCoord);
-        double hypotenuse = deltaX * deltaX + deltaY * deltaY;
-        hypotenuse = Math.Sqrt(hypotenuse);
-        return hypotenuse;
+        double distanceFromPlayer = deltaX * deltaX + deltaY * deltaY;
+        distanceFromPlayer = Math.Sqrt(distanceFromPlayer);
+        return distanceFromPlayer;
     }
 
     public void Draw(LevelElement element)

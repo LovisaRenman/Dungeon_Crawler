@@ -15,7 +15,6 @@ class Player : Creature
         IsAlive = true;
     }
 
-
     public override void Update(LevelElement element, List<LevelElement> list, LevelData levelData, int xCoord = 0, int yCoord = 0)
     {
         bool hasMoved = true;
@@ -23,33 +22,33 @@ class Player : Creature
         if (Console.ReadKey().Key == ConsoleKey.LeftArrow)
         {
             Delete();
-            hasMoved = MoveOneStep("left", list);
-            AttackEnemy(hasMoved, "left", list, levelData);
+            hasMoved = MoveOneStep(Directions.left, list);
+            AttackEnemy(hasMoved, Directions.left, list, levelData);
         }
         else if (Console.ReadKey().Key == ConsoleKey.RightArrow)
         {
             Delete();
-            hasMoved = MoveOneStep("right", list);
-            AttackEnemy(hasMoved, "right", list, levelData);
+            hasMoved = MoveOneStep(Directions.right, list);
+            AttackEnemy(hasMoved, Directions.right, list, levelData);
         }
         else if (Console.ReadKey().Key == ConsoleKey.DownArrow)
         {
             Delete();
-            hasMoved = MoveOneStep("down", list);
-            AttackEnemy(hasMoved, "down", list, levelData);
+            hasMoved = MoveOneStep(Directions.down, list);
+            AttackEnemy(hasMoved, Directions.down, list, levelData);
         }
         else if (Console.ReadKey().Key == ConsoleKey.UpArrow)
         {
             Delete();
-            hasMoved = MoveOneStep("up", list);
-            AttackEnemy(hasMoved, "up", list, levelData);
+            hasMoved = MoveOneStep(Directions.up, list);
+            AttackEnemy(hasMoved, Directions.up, list, levelData);
         }
         else if (Console.ReadKey().Key == ConsoleKey.End) Delete();
         
         Draw(element);
     }
 
-    public void AttackEnemy(bool hasMoved, string direction, List<LevelElement> list, LevelData levelData)
+    public void AttackEnemy(bool hasMoved, Directions direction, List<LevelElement> list, LevelData levelData)
     {
         bool isAlive = true;
         List<LevelElement> enemiesToRemove = new();
@@ -58,29 +57,29 @@ class Player : Creature
         {
             foreach (var enemy in list)
             {
-                if (enemy is Enemy && CoordX - 1 == enemy.CoordX && CoordY == enemy.CoordY && direction == "left")
+                if (enemy is Enemy e && CoordX - 1 == enemy.CoordX && CoordY == enemy.CoordY && direction == Directions.left)
                 {
                     AttackAnimation(-1);
                     DamageEnemy(enemy);
-                    if (!(enemy as Enemy).IsAlive) enemiesToRemove.Add(enemy);
+                    if (!e.IsAlive) enemiesToRemove.Add(enemy);
                 }
-                if (enemy is Enemy && CoordX + 1 == enemy.CoordX && CoordY == enemy.CoordY && direction == "right")
+                if (enemy is Enemy en && CoordX + 1 == enemy.CoordX && CoordY == enemy.CoordY && direction == Directions.right)
                 {
                     AttackAnimation(1);
                     DamageEnemy(enemy);
-                    if (!(enemy as Enemy).IsAlive) enemiesToRemove.Add(enemy);
+                    if (!en.IsAlive) enemiesToRemove.Add(enemy);
                 }
-                if (enemy is Enemy && CoordX == enemy.CoordX && CoordY - 1 == enemy.CoordY && direction == "up")
+                if (enemy is Enemy ene && CoordX == enemy.CoordX && CoordY - 1 == enemy.CoordY && direction == Directions.up)
                 {
                     AttackAnimation(-2);
                     DamageEnemy(enemy);
-                    if (!(enemy as Enemy).IsAlive) enemiesToRemove.Add(enemy);
+                    if (!ene.IsAlive) enemiesToRemove.Add(enemy);
                 }
-                if (enemy is Enemy && CoordX == enemy.CoordX && CoordY + 1 == enemy.CoordY && direction == "down")
+                if (enemy is Enemy enem && CoordX == enemy.CoordX && CoordY + 1 == enemy.CoordY && direction == Directions.down)
                 {
                     AttackAnimation(2);
                     DamageEnemy(enemy);
-                    if (!(enemy as Enemy).IsAlive) enemiesToRemove.Add(enemy);
+                    if (!enem.IsAlive) enemiesToRemove.Add(enemy);
                 }
             }
             foreach (var enemy in enemiesToRemove)
@@ -91,40 +90,39 @@ class Player : Creature
     }
     public void DamageEnemy(LevelElement enemy)
     {
-        bool isAlive = true;
-        if (enemy is Rat)
+        if (enemy is Rat rat)
         {
-            int damage = PlayerAttackDice.Throw() - (enemy as Rat).RatDefenceDice.Throw();
+            int damage = PlayerAttackDice.Throw() - rat.RatDefenceDice.Throw();
             if (damage <= 0) damage = 0;
-            else (enemy as Rat).HealthPoints = (enemy as Rat).HealthPoints - damage;
+            else rat.HealthPoints = rat.HealthPoints - damage;
             WriteAttack(enemy, damage);
             
-            if ((enemy as Rat).HealthPoints > 0)
+            if (rat.HealthPoints > 0)
             {
-                damage = (enemy as Rat).RatAttackDice.Throw() - PlayerDefenceDice.Throw();
+                damage = rat.RatAttackDice.Throw() - PlayerDefenceDice.Throw();
                 if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
-                (enemy as Rat).WriteAttack(this, damage);
+                rat.WriteAttack(this, damage);
                 if (HealthPoints < 0) IsAlive = false;
             }
-            else (enemy as Rat).IsAlive = false;
+            else rat.IsAlive = false;
         }
-        else if (enemy is Snake)
+        else if (enemy is Snake snake)
         {
-            int damage = PlayerAttackDice.Throw() - (enemy as Snake).SnakeDefenceDice.Throw();
+            int damage = PlayerAttackDice.Throw() - snake.SnakeDefenceDice.Throw();
             if (damage <= 0) damage = 0;
-            else (enemy as Snake).HealthPoints = (enemy as Snake).HealthPoints - damage;
+            else snake.HealthPoints = snake.HealthPoints - damage;
             WriteAttack(enemy, damage);
 
-            if ((enemy as Snake).HealthPoints > 0)
+            if (snake.HealthPoints > 0)
             {
-                damage = (enemy as Snake).SnakeAttackDice.Throw() - PlayerDefenceDice.Throw();
+                damage = snake.SnakeAttackDice.Throw() - PlayerDefenceDice.Throw();
                 if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
-                (enemy as Snake).WriteAttack(this, damage);
+                snake.WriteAttack(this, damage);
                 if (HealthPoints < 0) IsAlive = false;
             }
-            else (enemy as Snake).IsAlive = false;
+            else snake.IsAlive = false;
         }
     }
     

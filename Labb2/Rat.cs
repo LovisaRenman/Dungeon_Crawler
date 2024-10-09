@@ -23,23 +23,23 @@ class Rat : Enemy
         Delete();
         if (direction == 0)
         {
-            hasMoved = MoveOneStep("left", list);
-            AttackPlayer(hasMoved, "left", leveldata, list);
+            hasMoved = MoveOneStep(Directions.left, list);
+            AttackPlayer(hasMoved, Directions.left, leveldata, list);
         }
         else if (direction == 1)
         {
-            hasMoved = MoveOneStep("right", list);         
-            AttackPlayer(hasMoved, "right", leveldata, list);
+            hasMoved = MoveOneStep(Directions.right, list);         
+            AttackPlayer(hasMoved, Directions.right, leveldata, list);
         }
         else if (direction == 2)
         {
-            hasMoved = MoveOneStep("down", list);
-            AttackPlayer(hasMoved, "down", leveldata, list);
+            hasMoved = MoveOneStep(Directions.down, list);
+            AttackPlayer(hasMoved, Directions.down, leveldata, list);
         }
         else if (direction == 3)
         {
-            hasMoved = MoveOneStep("up", list);
-            AttackPlayer(hasMoved, "up", leveldata, list);
+            hasMoved = MoveOneStep(Directions.up, list);
+            AttackPlayer(hasMoved, Directions.up, leveldata, list);
         }
 
         Draw(element);

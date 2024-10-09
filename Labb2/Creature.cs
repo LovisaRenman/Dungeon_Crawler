@@ -10,41 +10,38 @@ abstract class Creature : LevelElement
 
     public abstract void Update(LevelElement element, List<LevelElement> list, LevelData leveldata, int playerXCoord = 0, int playerYCoord = 0);
 
-
-    public bool MoveOneStep(string direction, List<LevelElement> list)
+    public bool MoveOneStep(Directions direction, List<LevelElement> list)
     {
+        int value;
         bool hasMoved = true;
-        if (direction.ToLower() == "left")
+        if (direction == Directions.left)
         {
             CoordX--;
-            int value = PotentallyBlockStep(-1, list);
+            value = PotentallyBlockStep(-1, list);
             CoordX += value;
             if (value > 0) hasMoved = false;
         }
-        if (direction.ToLower() == "right")
+        if (direction == Directions.right)
         {
             CoordX++;
-            int value = PotentallyBlockStep(1, list);
+            value = PotentallyBlockStep(1, list);
             CoordX += value;
             if (value < 0) hasMoved = false;
-
         }
-        if (direction.ToLower() == "down")
+        if (direction == Directions.down)
         {
             CoordY++;
-            int value = PotentallyBlockStep(1, list);
+            value = PotentallyBlockStep(1, list);
             CoordY += value;
             if (value < 0) hasMoved = false;
-
         }
-        if (direction.ToLower() == "up")
+        if (direction == Directions.up)
         {
             CoordY--;
-            int value= PotentallyBlockStep(-1, list);
+            value= PotentallyBlockStep(-1, list);
             CoordY += value;
             if (value > 0) hasMoved = false;
         }
-
         return hasMoved;
     }
 
@@ -72,12 +69,13 @@ abstract class Creature : LevelElement
 
     public void AttackAnimation(int direction)
     {
+        int sleepDuration = 250;
         if (direction == -1)
         {
             Delete();
             CoordX--;
             Draw(this);
-            Thread.Sleep(500);
+            Thread.Sleep(sleepDuration);
             Delete();
             CoordX++;
             Draw(this);
@@ -87,7 +85,7 @@ abstract class Creature : LevelElement
             Delete();
             CoordX++;
             Draw(this);
-            Thread.Sleep(500);
+            Thread.Sleep(sleepDuration);
             Delete();
             CoordX--;
             Draw(this);
@@ -97,7 +95,7 @@ abstract class Creature : LevelElement
             Delete();
             CoordY--;
             Draw(this);
-            Thread.Sleep(500);
+            Thread.Sleep(sleepDuration);
             Delete();
             CoordY++;
             Draw(this);
@@ -107,7 +105,7 @@ abstract class Creature : LevelElement
             Delete();
             CoordY++;
             Draw(this);
-            Thread.Sleep(500);
+            Thread.Sleep(sleepDuration);
             Delete();
             CoordY--;
             Draw(this);
@@ -116,14 +114,12 @@ abstract class Creature : LevelElement
 
 
     private Dice _playerAttackDice = new Dice(2, 6, 2);
-
     public Dice PlayerAttackDice
     {
         get { return _playerAttackDice; }
     }
 
     private Dice _playerDefenceDice = new Dice(2, 6, 0);
-
     public Dice PlayerDefenceDice
     {
         get { return _playerDefenceDice; }
@@ -141,7 +137,6 @@ abstract class Creature : LevelElement
         get { return _ratDefenceDice; }
     }
 
-
     private Dice _snakeAttackDice = new Dice(1, 6, 3);
     public Dice SnakeAttackDice
     {
@@ -155,7 +150,8 @@ abstract class Creature : LevelElement
     }
     public void WriteAttack(LevelElement element, int damage)    
     {
-        double percentageOfHealth = Convert.ToDouble((element as Creature).HealthPoints) / Convert.ToDouble((element as Creature).OriginalHealthPoints);
+        double percentageOfHealth = Convert.ToDouble((element as Creature).HealthPoints)
+            / Convert.ToDouble((element as Creature).OriginalHealthPoints);
 
         if (percentageOfHealth > 0.66) Console.ForegroundColor = ConsoleColor.Green;
         else if (percentageOfHealth > 0.33) Console.ForegroundColor = ConsoleColor.Yellow;
@@ -166,7 +162,7 @@ abstract class Creature : LevelElement
         {
             Console.SetCursorPosition(0, 19);
             Console.Write(" ".PadRight(Console.BufferWidth));
-            Console.SetCursorPosition(0, 19);
+            Console.SetCursorPosition(0, 19); // Fixed bug where text wrote over itself
         }
         else if (this is Player)
         {
@@ -175,40 +171,38 @@ abstract class Creature : LevelElement
             Console.SetCursorPosition(0, 20);
         }
 
-        if (element is Rat)
+        if (element is Rat rat)
         {
-            if ((element as Rat).HealthPoints > 0) Console.WriteLine($"{Name} attacked with {(this as Player).PlayerAttackDice}. " +
-                $"{(element as Rat).Name} defended with {(element as Rat).RatDefenceDice} and recived {damage} damage " +
-                $"{(element as Rat).Name} remaining Hp is {(element as Rat).HealthPoints}");
-            else Console.WriteLine($"{Name} attacked with {(this as Player).PlayerAttackDice}. {(element as Rat).Name} defended with " +
-                $"{(element as Rat).RatDefenceDice} and recived {damage} damage {(element as Rat).Name} remaining Hp is {0}");
+            if (rat.HealthPoints > 0) Console.WriteLine($"{Name} attacked with {PlayerAttackDice}. " + 
+                $"{rat.Name} defended with {rat.RatDefenceDice} and recived {damage} damage " +
+                $"{rat.Name} remaining Hp is {rat.HealthPoints}");
+            else Console.WriteLine($"{Name} attacked with {PlayerAttackDice}. {rat.Name} defended with " +
+                $"{rat.RatDefenceDice} and recived {damage} damage {rat.Name} remaining Hp is {0}");
         }
-        else if (this is Rat)
+        else if (this is Rat r && element is Player player)
         {
-            if ((element as Player).HealthPoints > 0) Console.WriteLine($"{Name} attacked with {(this as Rat).RatAttackDice}. " +
-                $"{(element as Player).Name} defended with {(element as Player).PlayerDefenceDice} and recived {damage} damage " +
-                $"{(element as Player).Name} remaining Hp is {(element as Player).HealthPoints}");
-            else Console.WriteLine($"{Name} attacked with {(this as Rat).RatAttackDice}. {(element as Player).Name} defended with " +
-                $"{(element as Player).PlayerDefenceDice} and recived {damage} damage {(element as Player).Name} remaining Hp is {0}");
-
+            if (player.HealthPoints > 0) Console.WriteLine($"{Name} attacked with {r.RatAttackDice}. " +
+                $"{player.Name} defended with {player.PlayerDefenceDice} and recived {damage} damage " +
+                $"{player.Name} remaining Hp is {player.HealthPoints}");
+            else Console.WriteLine($"{Name} attacked with {r.RatAttackDice}. {player.Name} defended with " +
+                $"{player.PlayerDefenceDice} and recived {damage} damage {player.Name} remaining Hp is {0}");
         }
-        else if (element is Snake)
+        else if (element is Snake snake)
         {
-            if((element as Snake).HealthPoints > 0) Console.WriteLine($"{Name} attacked with {(this as Player).PlayerAttackDice}." +
-                $" {(element as Snake).Name} defended with {(element as Snake).SnakeDefenceDice} and recived {damage} damage " +
-                $"{(element as Snake).Name} remaining Hp is {(element as Snake).HealthPoints}");
-            else Console.WriteLine($"{Name} attacked with {(this as Player).PlayerAttackDice}. {(element as Snake).Name} defended with " +
-                $"{(element as Snake).SnakeDefenceDice} and recived {damage} damage {(element as Snake).Name} remaining Hp is {0}");
+            if(snake.HealthPoints > 0) Console.WriteLine($"{Name} attacked with {PlayerAttackDice}." +
+                $" {snake.Name} defended with {snake.SnakeDefenceDice} and recived {damage} damage " +
+                $"{snake.Name} remaining Hp is {snake.HealthPoints}");
+            else Console.WriteLine($"{Name} attacked with {PlayerAttackDice}. {snake.Name} defended with " +
+                $"{snake.SnakeDefenceDice} and recived {damage} damage {snake.Name} remaining Hp is {0}");
         }
-        else if (this is Snake)
+        else if (this is Snake s && element is Player p)
         {
-            if ((element as Player).HealthPoints > 0) Console.WriteLine($"{Name} attacked with {(this as Snake).SnakeAttackDice}." +
-                $" {(element as Player).Name} defended with {(element as Player).PlayerDefenceDice} and recived {damage} damage" +
-                $" {(element as Player).Name} remaining Hp is {(element as Player).HealthPoints}");
-            else Console.WriteLine($"{Name} attacked with {(this as Snake).SnakeAttackDice}. {(element as Player).Name} defended with " +
-                $"{(element as Player).PlayerDefenceDice} and recived {damage} damage {(element as Player).Name} remaining Hp is {0}");
+            if (p.HealthPoints > 0) Console.WriteLine($"{Name} attacked with {s.SnakeAttackDice}." +
+                $" {p.Name} defended with {p.PlayerDefenceDice} and recived {damage} damage" +
+                $" {p.Name} remaining Hp is {p.HealthPoints}");
+            else Console.WriteLine($"{Name} attacked with {s.SnakeAttackDice}. {p.Name} defended with " +
+                $"{p.PlayerDefenceDice} and recived {damage} damage {p.Name} remaining Hp is {0}");
         }
-
     }
 }
 

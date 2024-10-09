@@ -1,29 +1,28 @@
 ﻿
 abstract class Enemy : Creature
 {
-    public void AttackPlayer(bool hasMoved, string direction, LevelData levelData, List<LevelElement> list)
+    public void AttackPlayer(bool hasMoved, Directions direction, LevelData levelData, List<LevelElement> list)
     {
         if (!hasMoved)
-        {
-            
+        {            
             foreach (var player in list)
             {
-                if (player is Player && CoordX - 1 == player.CoordX && CoordY == player.CoordY && direction == "left")
+                if (player is Player && CoordX - 1 == player.CoordX && CoordY == player.CoordY && direction == Directions.left)
                 {
                     AttackAnimation(-1);
                     DamagePlayer(player, levelData.enemiesToRemove);
                 }
-                else if (player is Player && CoordX + 1 == player.CoordX && CoordY == player.CoordY && direction == "right")
+                else if (player is Player && CoordX + 1 == player.CoordX && CoordY == player.CoordY && direction == Directions.right)
                 {
                     AttackAnimation(1);
                     DamagePlayer(player, levelData.enemiesToRemove);
                 }
-                else if (player is Player && CoordX == player.CoordX && CoordY - 1 == player.CoordY && direction == "up")
+                else if (player is Player && CoordX == player.CoordX && CoordY - 1 == player.CoordY && direction == Directions.up)
                 {
                     AttackAnimation(-2);
                     DamagePlayer(player, levelData.enemiesToRemove);
                 }
-                else if (player is Player && CoordX == player.CoordX && CoordY + 1 == player.CoordY && direction == "down")
+                else if (player is Player && CoordX == player.CoordX && CoordY + 1 == player.CoordY && direction == Directions.down)
                 {
                     AttackAnimation(2);
                     DamagePlayer(player, levelData.enemiesToRemove);
@@ -33,48 +32,50 @@ abstract class Enemy : Creature
     }
     public void DamagePlayer(LevelElement player, List<LevelElement> enemiesToRemove)
     {
-        if (player is Player && this is Rat)
+        if (player is Player p && this is Rat)
         {
-            int damage = RatAttackDice.Throw() - (player as Player).PlayerDefenceDice.Throw();
+            int damage = RatAttackDice.Throw() - p.PlayerDefenceDice.Throw();
             if (damage <= 0) damage = 0;
-            else (player as Player).HealthPoints = (player as Player).HealthPoints - damage;
+            else p.HealthPoints = p.HealthPoints - damage;
             WriteAttack(player, damage);
 
-            if ((player as Player).HealthPoints > 0)
+            if (p.HealthPoints > 0)
             {
-                damage = (player as Player).PlayerAttackDice.Throw() - RatDefenceDice.Throw();
+                damage = p.PlayerAttackDice.Throw() - RatDefenceDice.Throw();
                 if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
-                (player as Player).WriteAttack(this, damage);
+                p.WriteAttack(this, damage);
+
                 if (HealthPoints < 0)
                 {
                     IsAlive = false;
                     enemiesToRemove.Add(this);
                 }
             }
-            else (player as Player).IsAlive = false;
+            else p.IsAlive = false;
 
         }
-        else if (player is Player && this is Snake)
+        else if (player is Player pl && this is Snake)
         {
-            int damage = SnakeAttackDice.Throw() - (player as Player).PlayerDefenceDice.Throw();
+            int damage = SnakeAttackDice.Throw() - pl.PlayerDefenceDice.Throw();
             if (damage <= 0) damage = 0;
-            else (player as Player).HealthPoints = (player as Player).HealthPoints - damage;
+            else pl.HealthPoints = pl.HealthPoints - damage;
             WriteAttack(player, damage);
 
-            if ((player as Player).HealthPoints > 0)
+            if (pl.HealthPoints > 0)
             {
-                damage = (player as Player).PlayerAttackDice.Throw() - SnakeDefenceDice.Throw();
+                damage = pl.PlayerAttackDice.Throw() - SnakeDefenceDice.Throw();
                 if (damage <= 0) damage = 0;
                 else HealthPoints = HealthPoints - damage;
-                (player as Player).WriteAttack(this, damage);
+                pl.WriteAttack(this, damage);
+
                 if (HealthPoints < 0) 
-                { 
+                {
                     IsAlive = false;
                     enemiesToRemove.Add(this);
                 }
             }
-            else (player as Player).IsAlive = false;
+            else pl.IsAlive = false;
         }
     }
 }
