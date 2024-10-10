@@ -5,28 +5,25 @@ abstract class Enemy : Creature
     {
         if (!hasMoved)
         {            
-            foreach (var player in list)
+            if (levelData.Player is Player && CoordX - 1 == levelData.Player.CoordX && CoordY == levelData.Player.CoordY && direction == Directions.left)
             {
-                if (player is Player && CoordX - 1 == player.CoordX && CoordY == player.CoordY && direction == Directions.left)
-                {
-                    AttackAnimation(-1);
-                    DamagePlayer(player, levelData.enemiesToRemove);
-                }
-                else if (player is Player && CoordX + 1 == player.CoordX && CoordY == player.CoordY && direction == Directions.right)
-                {
-                    AttackAnimation(1);
-                    DamagePlayer(player, levelData.enemiesToRemove);
-                }
-                else if (player is Player && CoordX == player.CoordX && CoordY - 1 == player.CoordY && direction == Directions.up)
-                {
-                    AttackAnimation(-2);
-                    DamagePlayer(player, levelData.enemiesToRemove);
-                }
-                else if (player is Player && CoordX == player.CoordX && CoordY + 1 == player.CoordY && direction == Directions.down)
-                {
-                    AttackAnimation(2);
-                    DamagePlayer(player, levelData.enemiesToRemove);
-                }
+                AttackAnimation(-1);
+                DamagePlayer(levelData.Player, levelData.enemiesToRemove);
+            }
+            else if (levelData.Player is Player && CoordX + 1 == levelData.Player.CoordX && CoordY == levelData.Player.CoordY && direction == Directions.right)
+            {
+                AttackAnimation(1);
+                DamagePlayer(levelData.Player, levelData.enemiesToRemove);
+            }
+            else if (levelData.Player is Player && CoordX == levelData.Player.CoordX && CoordY - 1 == levelData.Player.CoordY && direction == Directions.up)
+            {
+                AttackAnimation(-2);
+                DamagePlayer(levelData.Player, levelData.enemiesToRemove);
+            }
+            else if (levelData.Player is Player && CoordX == levelData.Player.CoordX && CoordY + 1 == levelData.Player.CoordY && direction == Directions.down)
+            {
+                AttackAnimation(2);
+                DamagePlayer(levelData.Player, levelData.enemiesToRemove);
             }
         }
     }

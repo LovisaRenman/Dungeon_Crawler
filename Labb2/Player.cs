@@ -50,7 +50,6 @@ class Player : Creature
 
     public void AttackEnemy(bool hasMoved, Directions direction, List<LevelElement> list, LevelData levelData)
     {
-        bool isAlive = true;
         List<LevelElement> enemiesToRemove = new();
 
         if (!hasMoved)

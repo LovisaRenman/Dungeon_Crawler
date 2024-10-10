@@ -1,6 +1,6 @@
 ﻿
 class Rat : Enemy
-{   
+{
     public Rat(int xCord, int yCord)
     {
         CharacterChar = 'r';

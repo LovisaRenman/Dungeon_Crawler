@@ -36,19 +36,19 @@ class LevelData : LevelElement
                             var currentChar = reader.Read();
                             if (currentChar == 35) // #
                             {
-                                elements.Add(new Wall(j, i));
+                                elements.Add(new Wall(j, i+3));
                             }
                             else if (currentChar == 114) // r
                             {
-                                elements.Add(new Rat(j, i));
+                                elements.Add(new Rat(j, i+3));
                             }
                             else if (currentChar == 115) // s
                             {
-                                elements.Add(new Snake(j, i));
+                                elements.Add(new Snake(j, i+3));
                             }
                             else if (currentChar == 64) // @
                             {
-                                Player = new Player(j, i);
+                                Player = new Player(j, i+3);
                                 elements.Add(Player);
                             }
                         }

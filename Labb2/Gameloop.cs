@@ -14,6 +14,7 @@ class Gameloop
             levelData.Player.Draw(levelData.Player);
             levelData.Player.Update(levelData.Player, levelData.Elements, levelData);
 
+
             foreach (LevelElement element in levelData.Elements)
             {
                 double drawRange = 5;
@@ -47,7 +48,7 @@ class Gameloop
             }
             turn++;
             Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(0, 18);
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine($"Player: @ \t HealthPoints: {levelData.Player.HealthPoints} \t Turn: {turn}");
 
             foreach (var enemy in levelData.enemiesToRemove)
@@ -62,4 +63,3 @@ class Gameloop
         Console.WriteLine("Game Over!");
     }
 }
-

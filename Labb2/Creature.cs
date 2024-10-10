@@ -160,15 +160,15 @@ abstract class Creature : LevelElement
 
         if (this is Enemy)
         {
-            Console.SetCursorPosition(0, 19);
-            Console.Write(" ".PadRight(Console.BufferWidth));
-            Console.SetCursorPosition(0, 19); // Fixed bug where text wrote over itself
+            Console.SetCursorPosition(0, 1);
+            Console.Write(" ".PadRight(Console.WindowWidth));
+            Console.SetCursorPosition(0, 1); // Fixed bug where text wrote over itself
         }
         else if (this is Player)
         {
-            Console.SetCursorPosition(0, 20);
-            Console.Write(" ".PadRight(Console.BufferWidth));
-            Console.SetCursorPosition(0, 20);
+            Console.SetCursorPosition(0, 2);
+            Console.Write(" ".PadRight(Console.WindowWidth));
+            Console.SetCursorPosition(0, 2);
         }
 
         if (element is Rat rat)
